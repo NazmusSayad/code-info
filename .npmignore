@@ -1,0 +1,6 @@
+*
+!dist/**
+!assets/**
+!public/**
+!package.json
+!README.md

@@ -1,0 +1,42 @@
+{
+  "name": "@nazmussayad/npm",
+  "version": "0.1.10",
+  "description": "npm-package-boilerplate",
+  "main": "./dist/mjs/index.js",
+  "types": "./dist/mjs/index.d.js",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/mjs/index.js"
+    }
+  },
+  "scripts": {
+    "cjs": "nodemon test/index.cjs",
+    "mjs": "nodemon test/index.mjs",
+    "pkg": "yarn add -D @nazmussayad/npm@latest",
+    "dev": "node dist.js && tsc -p tsconfig-cjs.json -w",
+    "build": "node build.js",
+    "update": "node update.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@nazmussayad/npm": "^0.1.6",
+    "@types/node": "latest",
+    "node-ls-files": "0.0.1",
+    "typescript": "latest"
+  },
+  "type": "module",
+  "license": "ISC",
+  "author": "https://github.com/NazmusSayad",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NazmusSayad/npm-package-boilerplate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NazmusSayad/npm-package-boilerplate/issues"
+  },  
+  "engines": {
+    "node": "*"
+  },
+  "homepage": "https://github.com/NazmusSayad/npm-package-boilerplate#readme"
+}
