@@ -1,7 +1,7 @@
 {
-  "name": "@nazmussayad/npm",
-  "version": "0.1.10",
-  "description": "npm-package-boilerplate",
+  "name": "code-lines",
+  "version": "0.0.0",
+  "description": "code-lines",
   "main": "./dist/mjs/index.js",
   "types": "./dist/mjs/index.d.js",
   "exports": {
@@ -10,17 +10,18 @@
       "import": "./dist/mjs/index.js"
     }
   },
+  "bin": {
+    "code-lines": "./dist/cjs/bin/index.js"
+  },
   "scripts": {
-    "cjs": "nodemon test/index.cjs",
-    "mjs": "nodemon test/index.mjs",
-    "pkg": "yarn add -D @nazmussayad/npm@latest",
+    "cjs": "node --watch test/index.cjs",
+    "mjs": "node --watch test/index.mjs",
     "dev": "node dist.js && tsc -p tsconfig-cjs.json -w",
     "build": "node build.js",
     "update": "node update.js"
   },
   "dependencies": {},
   "devDependencies": {
-    "@nazmussayad/npm": "^0.1.6",
     "@types/node": "latest",
     "node-ls-files": "0.0.1",
     "typescript": "latest"
@@ -30,13 +31,10 @@
   "author": "https://github.com/NazmusSayad",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NazmusSayad/npm-package-boilerplate.git"
+    "url": "git+https://github.com/NazmusSayad/code-lines.git"
   },
   "bugs": {
-    "url": "https://github.com/NazmusSayad/npm-package-boilerplate/issues"
-  },  
-  "engines": {
-    "node": "*"
+    "url": "https://github.com/NazmusSayad/code-lines/issues"
   },
-  "homepage": "https://github.com/NazmusSayad/npm-package-boilerplate#readme"
+  "homepage": "https://github.com/NazmusSayad/code-lines#readme"
 }

@@ -1,1 +1,5 @@
-export default 'Hello, world!'
+const hello = () => {
+  return 'wwe dfdfdf'
+}
+
+export default hello
