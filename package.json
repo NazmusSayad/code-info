@@ -1,12 +1,13 @@
 {
   "name": "code-info",
-  "version": "0.0.1",
-  "description": "Get information about your source code.",
+  "version": "0.0.0",
+  "description": "code-info",
   "main": "./dist/mjs/index.js",
   "types": "./dist/mjs/index.d.js",
+  "preferGlobal": true,
   "bin": {
-    "code-info": "node ./dist/cjs/bin/index.js",
-    "ci": "node ./dist/cjs/bin/index.js"
+    "code-info": "./dist/cjs/bin/index.js",
+    "ci": "./dist/cjs/bin/index.js"
   },
   "exports": {
     ".": {
@@ -23,7 +24,9 @@
     "update": "node update.js"
   },
   "dependencies": {
-    "node-ls-files": "^0.0.3"
+    "ignore": "^5.2.0",
+    "node-ls-files": "^0.0.3",
+    "parse-gitignore": "^2.0.0"
   },
   "devDependencies": {
     "@types/node": "latest",
@@ -38,9 +41,6 @@
   },
   "bugs": {
     "url": "https://github.com/NazmusSayad/code-info/issues"
-  },
-  "engines": {
-    "node": "*"
   },
   "homepage": "https://github.com/NazmusSayad/code-info#readme"
 }
