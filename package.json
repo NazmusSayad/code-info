@@ -1,12 +1,12 @@
 {
-  "name": "code-info",
-  "version": "0.0.4",
-  "description": "code-info",
+  "name": "@nazmussayad/code-info",
+  "version": "0.0.0",
+  "description": "Get information about your source code.",
   "main": "./dist/mjs/index.js",
   "types": "./dist/mjs/index.d.js",
   "bin": {
-    "code-info": "node ./dist/cjs/bin/index.js",
-    "ci": "node ./bin/index.js"
+    "ci": "node ./dist/cjs/bin/index.js",
+    "code-info": "node ./dist/cjs/bin/index.js"
   },
   "exports": {
     ".": {
@@ -15,7 +15,7 @@
     }
   },
   "scripts": {
-    "ci": "node --watch test/index.cjs",
+    "ci": "node --watch ./dist/cjs/bin/index.js",
     "cjs": "node --watch test/index.cjs",
     "mjs": "node --watch test/index.mjs",
     "dev": "node dist.js && tsc -p tsconfig-cjs.json -w",
