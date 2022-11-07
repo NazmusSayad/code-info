@@ -1,11 +1,12 @@
 {
   "name": "code-info",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "code-info",
   "main": "./dist/mjs/index.js",
   "types": "./dist/mjs/index.d.js",
   "bin": {
-    "code-info": "node ./dist/cjs/bin/index.js"
+    "code-info": "node ./dist/cjs/bin/index.js",
+    "ci": "node ./bin/index.js"
   },
   "exports": {
     ".": {
