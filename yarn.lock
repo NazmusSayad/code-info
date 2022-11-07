@@ -3,16 +3,23 @@
 
 
 "@types/node@latest":
-  "integrity" "sha512-CRpX21/kGdzjOpFsZSkcrXMGIBWMGNIHXXBVFSH+ggkftxg+XYP20TESbh+zFvFj3EQOl5byk0HTRn1IL6hbqg=="
-  "resolved" "https://registry.npmjs.org/@types/node/-/node-18.11.9.tgz"
-  "version" "18.11.9"
+  version "18.11.9"
+  resolved "https://registry.npmjs.org/@types/node/-/node-18.11.9.tgz"
+  integrity sha512-CRpX21/kGdzjOpFsZSkcrXMGIBWMGNIHXXBVFSH+ggkftxg+XYP20TESbh+zFvFj3EQOl5byk0HTRn1IL6hbqg==
 
-"node-ls-files@^0.0.3":
-  "integrity" "sha512-OhZBvqbaSdZmAWAHX5xPHWrGep2Q0XDy6Kt3DY0LSWwEoiImWT41zW1oXwlIbQvJHrb3qO3itZRK0zhogLKPqA=="
-  "resolved" "https://registry.npmjs.org/node-ls-files/-/node-ls-files-0.0.3.tgz"
-  "version" "0.0.3"
+code-info@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/code-info/-/code-info-0.0.2.tgz#6b56fea31d18c4138193e2dcbe96efdd5dbfcf68"
+  integrity sha512-GBDrkaxWxRwhkacBgAVBHH212FRIRuP3pYRCODGHxH7S+igipRUutG3Gtg++t78Tf4d1CwogeehFgicrnLZZmA==
+  dependencies:
+    node-ls-files "^0.0.3"
 
-"typescript@latest":
-  "integrity" "sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ=="
-  "resolved" "https://registry.npmjs.org/typescript/-/typescript-4.8.4.tgz"
-  "version" "4.8.4"
+node-ls-files@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.npmjs.org/node-ls-files/-/node-ls-files-0.0.3.tgz"
+  integrity sha512-OhZBvqbaSdZmAWAHX5xPHWrGep2Q0XDy6Kt3DY0LSWwEoiImWT41zW1oXwlIbQvJHrb3qO3itZRK0zhogLKPqA==
+
+typescript@latest:
+  version "4.8.4"
+  resolved "https://registry.npmjs.org/typescript/-/typescript-4.8.4.tgz"
+  integrity sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==

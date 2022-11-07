@@ -1,6 +1,6 @@
 {
   "name": "code-info",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "code-info",
   "main": "./dist/mjs/index.js",
   "types": "./dist/mjs/index.d.js",
