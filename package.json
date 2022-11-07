@@ -1,29 +1,31 @@
 {
-  "name": "code-lines",
-  "version": "0.0.0",
-  "description": "code-lines",
+  "name": "code-info",
+  "version": "0.0.2",
+  "description": "code-info",
   "main": "./dist/mjs/index.js",
   "types": "./dist/mjs/index.d.js",
+  "bin": {
+    "code-info": "node ./dist/cjs/bin/index.js"
+  },
   "exports": {
     ".": {
       "require": "./dist/cjs/index.js",
       "import": "./dist/mjs/index.js"
     }
   },
-  "bin": {
-    "code-lines": "./dist/cjs/bin/index.js"
-  },
   "scripts": {
+    "ci": "node --watch test/index.cjs",
     "cjs": "node --watch test/index.cjs",
     "mjs": "node --watch test/index.mjs",
     "dev": "node dist.js && tsc -p tsconfig-cjs.json -w",
     "build": "node build.js",
     "update": "node update.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "node-ls-files": "^0.0.3"
+  },
   "devDependencies": {
     "@types/node": "latest",
-    "node-ls-files": "0.0.1",
     "typescript": "latest"
   },
   "type": "module",
@@ -31,10 +33,10 @@
   "author": "https://github.com/NazmusSayad",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NazmusSayad/code-lines.git"
+    "url": "git+https://github.com/NazmusSayad/code-info.git"
   },
   "bugs": {
-    "url": "https://github.com/NazmusSayad/code-lines/issues"
+    "url": "https://github.com/NazmusSayad/code-info/issues"
   },
-  "homepage": "https://github.com/NazmusSayad/code-lines#readme"
+  "homepage": "https://github.com/NazmusSayad/code-info#readme"
 }
