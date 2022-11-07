@@ -1,12 +1,12 @@
 {
-  "name": "@nazmussayad/code-info",
-  "version": "0.0.0",
+  "name": "code-info",
+  "version": "0.0.1",
   "description": "Get information about your source code.",
   "main": "./dist/mjs/index.js",
   "types": "./dist/mjs/index.d.js",
   "bin": {
-    "ci": "node ./dist/cjs/bin/index.js",
-    "code-info": "node ./dist/cjs/bin/index.js"
+    "code-info": "node ./dist/cjs/bin/index.js",
+    "ci": "node ./dist/cjs/bin/index.js"
   },
   "exports": {
     ".": {
@@ -38,6 +38,9 @@
   },
   "bugs": {
     "url": "https://github.com/NazmusSayad/code-info/issues"
+  },
+  "engines": {
+    "node": "*"
   },
   "homepage": "https://github.com/NazmusSayad/code-info#readme"
 }
