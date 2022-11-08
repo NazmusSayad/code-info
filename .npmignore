@@ -5,3 +5,9 @@
 !public/**
 !package.json
 !README.md
+
+!lib/**
+
+!dist-cjs/**
+
+!dist-mjs/**

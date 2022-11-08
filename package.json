@@ -2,21 +2,21 @@
   "name": "code-info",
   "version": "0.0.0",
   "description": "code-info",
-  "main": "./dist/mjs/index.js",
-  "types": "./dist/mjs/index.d.js",
+  "main": "./dist-mjs/index.js",
+  "types": "./dist-mjs/index.d.js",
   "preferGlobal": true,
   "bin": {
-    "code-info": "./dist/cjs/bin/index.js",
-    "ci": "./dist/cjs/bin/index.js"
+    "code-info": "./dist-cjs/bin/index.js",
+    "ci": "./dist-cjs/bin/index.js"
   },
   "exports": {
     ".": {
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/mjs/index.js"
+      "require": "./dist-cjs/index.js",
+      "import": "./dist-mjs/index.js"
     }
   },
   "scripts": {
-    "ci": "node --watch ./dist/cjs/bin/index.js",
+    "ci": "node --watch dist-cjs/bin/index.js",
     "cjs": "node --watch test/index.cjs",
     "mjs": "node --watch test/index.mjs",
     "dev": "node dist.js && tsc -p tsconfig-cjs.json -w",
@@ -29,8 +29,9 @@
     "parse-gitignore": "^2.0.0"
   },
   "devDependencies": {
-    "@types/node": "latest",
-    "typescript": "latest"
+    "@types/node": "^18.11.9",
+    "npm-ez": "^0.0.1",
+    "typescript": "^4.8.4"
   },
   "type": "module",
   "license": "ISC",
