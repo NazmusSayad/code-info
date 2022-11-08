@@ -20,8 +20,7 @@
     "cjs": "node --watch test/index.cjs",
     "mjs": "node --watch test/index.mjs",
     "dev": "npm-ez dev",
-    "build": "npm-ez build",
-    "update": "node update.js"
+    "build": "npm-ez build"
   },
   "dependencies": {
     "ignore": "^5.2.0",
