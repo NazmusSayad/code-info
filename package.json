@@ -19,8 +19,8 @@
     "ci": "node --watch dist-cjs/bin/index.js",
     "cjs": "node --watch test/index.cjs",
     "mjs": "node --watch test/index.mjs",
-    "dev": "node dist.js && tsc -p tsconfig-cjs.json -w",
-    "build": "node build.js",
+    "dev": "npm-ez dev",
+    "build": "npm-ez build",
     "update": "node update.js"
   },
   "dependencies": {
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
-    "npm-ez": "^0.0.1",
+    "npm-ez": "^0.0.2",
     "typescript": "^4.8.4"
   },
   "type": "module",

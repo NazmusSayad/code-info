@@ -96,10 +96,10 @@ node-ls-files@^0.0.3:
   resolved "https://registry.yarnpkg.com/node-ls-files/-/node-ls-files-0.0.3.tgz#37e1158892521fadfb9cfa7570fb2976d5c9fece"
   integrity sha512-OhZBvqbaSdZmAWAHX5xPHWrGep2Q0XDy6Kt3DY0LSWwEoiImWT41zW1oXwlIbQvJHrb3qO3itZRK0zhogLKPqA==
 
-npm-ez@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/npm-ez/-/npm-ez-0.0.1.tgz#eab79a6176bb9b2d516e29c444c1600fe014bee6"
-  integrity sha512-0Ht9N9p3VI+3VYDt7A2xKsIXqcRMEeNTUIeC5AdvY4va+DyLNxbgPGxekUAqH6pPhQMI0/YBl3d15y5TqJO73g==
+npm-ez@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/npm-ez/-/npm-ez-0.0.2.tgz#387d9f4ac826daa8733f298e60b5958f940325a6"
+  integrity sha512-JIcR7IJb70iRo+1cN5Ur3ovsip3+f6msdYiKzp2tWlDvW3XRsNA6cqB/v3rpTmUmB1AIrEvbD3Ff7WveVfkZsw==
   dependencies:
     node-ls-files "^0.0.3"
     shelljs "^0.8.5"
