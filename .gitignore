@@ -259,6 +259,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-dist-cjs
 
+# Added by npm-ez
+dist-cjs
 dist-mjs

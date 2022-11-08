@@ -1,13 +1,8 @@
+
+# Added by npm-ez
 *
-!bin/**
-!dist/**
-!assets/**
-!public/**
+!lib/**
+!dist-cjs/**
+!dist-mjs/**
 !package.json
 !README.md
-
-!lib/**
-
-!dist-cjs/**
-
-!dist-mjs/**
