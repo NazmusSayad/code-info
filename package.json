@@ -1,6 +1,6 @@
 {
   "name": "code-info",
-  "version": "0.0.0",
+  "version": "0.0.1-0",
   "description": "code-info",
   "preferGlobal": true,
   "main": "./dist-mjs/index.js",
