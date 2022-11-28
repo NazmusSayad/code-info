@@ -1,9 +1,11 @@
 import argv from './argv.js'
 import getFileInfo from '../scripts/getFileInfo.js'
 import getFiles from '../scripts/getFiles.js'
+import path from 'path'
 
-const cwd = process.cwd()
-const filesList = getFiles(cwd, {
+const targetDir = path.resolve(argv._[0] ?? '')
+
+const filesList = getFiles(targetDir, {
   exclude: argv['--exclude'],
   include: argv['--include'],
   type: argv['--type'],
