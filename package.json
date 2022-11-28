@@ -1,14 +1,11 @@
 {
   "name": "code-info",
-  "version": "0.0.1-0",
+  "version": "1.0.0",
   "description": "code-info",
   "preferGlobal": true,
   "main": "./dist-mjs/index.js",
   "types": "./dist-mjs/index.d.js",
-  "bin": {
-    "code-info": "./dist-cjs/bin/index.js",
-    "ci": "./dist-cjs/bin/index.js"
-  },
+  "bin": "./dist-cjs/bin/index.js",
   "exports": {
     ".": {
       "require": "./dist-cjs/index.js",
@@ -17,20 +14,20 @@
   },
   "scripts": {
     "ci": "node --watch dist-cjs/bin/index.js",
-    "cjs": "node --watch test/index.cjs",
-    "mjs": "node --watch test/index.mjs",
     "dev": "npm-ez dev",
     "build": "npm-ez build"
   },
   "dependencies": {
+    "arg": "^5.0.2",
     "ignore": "^5.2.0",
-    "node-ls-files": "^0.0.3",
+    "node-ls-files": "latest",
     "parse-gitignore": "^2.0.0"
   },
   "devDependencies": {
-    "@types/node": "^18.11.9",
-    "npm-ez": "^0.0.6",
-    "typescript": "^4.8.4"
+    "@types/node": "latest",
+    "@types/parse-gitignore": "^1.0.0",
+    "npm-ez": "latest",
+    "typescript": "latest"
   },
   "type": "module",
   "license": "ISC",

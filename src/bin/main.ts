@@ -1,25 +1,20 @@
+import argv from './argv.js'
+import getFileInfo from '../scripts/getFileInfo.js'
 import getFiles from '../scripts/getFiles.js'
 
 const cwd = process.cwd()
-const argsEntries = process.argv
-  .filter((arg) => arg.startsWith('--'))
-  .map((arg) => {
-    const argData = arg.replace(/^--/, '').split('=')
-    if (argData.length !== 2) {
-      throw new Error(`Invalid arg: ${arg}`)
-    }
-    return argData
-  })
+const filesList = getFiles(cwd, {
+  exclude: argv['--exclude'],
+  include: argv['--include'],
+  type: argv['--type'],
+})
 
-const args = Object.fromEntries(argsEntries)
-for (let key in args) {
-  switch (key) {
-    case 'include':
-    case 'exclude':
-      args[key] = args[key].split(',')
-      break
-  }
-}
+console.log('Files:', filesList.length)
 
-const filesList = getFiles(cwd, args)
-console.log(filesList)
+let lineCount = 0
+filesList.forEach((file) => {
+  const { lines } = getFileInfo(file)
+  lineCount += lines.length
+})
+
+console.log('Lines:', lineCount)

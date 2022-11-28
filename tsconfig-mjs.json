@@ -1,6 +1,0 @@
-{
-	"include": [
-		"src"
-	],
-	"extends": "/workspaces/code-info/node_modules/npm-ez/lib/tsconfig-mjs.json"
-}
