@@ -15,5 +15,13 @@ if ((args['--exclude'] || args['--include']) && args['--type']) {
     'Exclude or include cannot be specified when type is specified'
   )
 }
+const makeArray = (flag: '--type' | '--exclude' | '--include') => {
+  const array = args[flag]
+  if (!array) return
 
+  const newArray = array?.map((str) => str.split(',')).flat()
+  args[flag] = newArray
+}
+
+makeArray('--type')
 export default args
