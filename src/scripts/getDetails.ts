@@ -1,5 +1,5 @@
 import { FileInfo } from './getFilesInfo'
-import langList from '../data/langList.js'
+import langList, { langExtList } from '../data/langList.js'
 
 export interface Details {
   name: string
@@ -14,12 +14,13 @@ export default (details: FileInfo[]): Details[] => {
   const finalResult: Details[] = []
 
   details.forEach((dt) => {
-    result[dt.ext] ??= []
-    result[dt.ext].push(dt)
+    const index = langExtList[dt.ext]
+    result[index] ??= []
+    result[index].push(dt)
   })
 
-  for (let key in result) {
-    const details: FileInfo[] = result[key]
+  for (let index in result) {
+    const details: FileInfo[] = result[index]
     let totalCharPerLine: number = 0
     let totalSize: number = 0
     let totalLines: number = 0
@@ -31,7 +32,7 @@ export default (details: FileInfo[]): Details[] => {
     })
 
     finalResult.push({
-      name: langList[key],
+      name: langList[+index].name,
       files: details.length,
       lines: totalLines,
       avgCharPerLine: Math.round(totalCharPerLine / details.length),

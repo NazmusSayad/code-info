@@ -1,9 +1,9 @@
-interface List {
+export interface List {
   name: string
   extensions: string[]
 }
 
-const list: List[] = [
+const langList: List[] = [
   {
     name: '1C Enterprise',
     extensions: ['bsl', 'os'],
@@ -2293,11 +2293,11 @@ const list: List[] = [
   },
 ]
 
-const finalList: any = {}
-list.forEach(({ extensions, name }) => {
+export const langExtList: any = {}
+langList.forEach(({ extensions }, index) => {
   extensions.forEach((ext) => {
-    finalList[ext] = name
+    langExtList[ext] = index
   })
 })
 
-export default finalList
+export default langList

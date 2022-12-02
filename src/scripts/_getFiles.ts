@@ -3,7 +3,7 @@ import path from 'path'
 import gitIgnore from 'ignore'
 import ls from 'node-ls-files'
 import gitignoreParse from 'parse-gitignore'
-import langList from '../data/langList.js'
+import { langExtList } from '../data/langList.js'
 const gitignorePath = path.resolve('./.gitignore')
 
 export interface GetFiles {
@@ -42,7 +42,7 @@ export default (
         return type.includes(ext.slice(1))
       }
 
-      if (langList[ext.slice(1)]) return true
+      if (langExtList[ext.slice(1)] !== undefined) return true
     },
   })
 }
