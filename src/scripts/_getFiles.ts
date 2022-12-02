@@ -3,18 +3,20 @@ import path from 'path'
 import gitIgnore from 'ignore'
 import ls from 'node-ls-files'
 import gitignoreParse from 'parse-gitignore'
+import langList from '../data/langList.js'
 const gitignorePath = path.resolve('./.gitignore')
 
-interface Options {
+export interface GetFiles {
   exclude?: string[]
   include?: string[]
   type?: string[]
 }
 
 export default (
-  targetDir: string,
-  { exclude = [], include = [], type = [] }: Options
+  targetDir: string = '.',
+  { exclude = [], include = [], type = [] }: GetFiles
 ) => {
+  // Gitignore.....
   let ig = gitIgnore().add([
     'yarn.lock',
     'pnpm-lock.yaml',
@@ -40,7 +42,7 @@ export default (
         return type.includes(ext.slice(1))
       }
 
-      return true
+      if (langList[ext.slice(1)]) return true
     },
   })
 }

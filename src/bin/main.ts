@@ -1,22 +1,68 @@
 import argv from './argv.js'
-import getFileInfo from '../scripts/getFileInfo.js'
-import getFiles from '../scripts/getFiles.js'
 import path from 'path'
+import Table from 'cli-table'
+import ac from 'ansi-colors'
+
+import getFilesInfo from '../scripts/getFilesInfo.js'
+import getDetails from '../scripts/getDetails.js'
+import getOverview from '../scripts/getOverview.js'
 
 const targetDir = path.resolve(argv._[0] ?? '')
 
-const filesList = getFiles(targetDir, {
+const details = getFilesInfo(targetDir, {
   exclude: argv['--exclude'],
   include: argv['--include'],
   type: argv['--type'],
 })
 
-console.log('Files:', filesList.length)
+const finalResult = getDetails(details)
+const overview = getOverview(finalResult)
 
-let lineCount = 0
-filesList.forEach((file) => {
-  const { lines } = getFileInfo(file)
-  lineCount += lines.length
+console.log()
+const group = (label: string, options: any) => {
+  console.log('', ac.blueBright.bold(label + ':'))
+  console.log(
+    new Table({
+      colAligns: ['left', 'middle', 'right', 'right', 'right'],
+      ...options,
+    }).toString()
+  )
+  console.log()
+}
+
+const logLangStats = (stats: any) => {
+  return {
+    head: ['Name', 'Percentage'],
+    rows: stats.map(({ name = '', percentage = '' }) => {
+      return [name, percentage + '%']
+    }),
+  }
+}
+
+group('Basic Overview', {
+  head: ['Files', 'Lines', 'ACPL', 'Size (bytes)'],
+  rows: [
+    [
+      overview.basic.files.toString(),
+      overview.basic.lines.toString(),
+      overview.basic.avgCharPerLine.toString(),
+      overview.basic.size.toString(),
+    ],
+  ],
 })
 
-console.log('Lines:', lineCount)
+group(
+  'Most used languages by code lines',
+  logLangStats(overview.mostUsedBySize)
+)
+group(
+  'Most used languages by file sizes',
+  logLangStats(overview.mostUsedByLines)
+)
+
+group('Languages details', {
+  head: ['Name', 'Files', 'Lines', 'ACPL', 'Size (bytes)'],
+  rows: finalResult.map(({ name, lines, size, files, avgCharPerLine }) => {
+    return [name, files, lines, avgCharPerLine, size]
+  }),
+})

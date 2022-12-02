@@ -1,4 +1,9 @@
-export default [
+interface List {
+  name: string
+  extensions: string[]
+}
+
+const list: List[] = [
   {
     name: '1C Enterprise',
     extensions: ['bsl', 'os'],
@@ -188,7 +193,6 @@ export default [
       'hh',
       'hpp',
       'hxx',
-      null,
       'inl',
       'ino',
       'ipp',
@@ -532,7 +536,7 @@ export default [
     extensions: ['g', 'gap', 'gd', 'gi', 'tst'],
   },
   {
-    name: 'GCC Machine Description',
+    name: 'Markdown',
     extensions: ['md'],
   },
   {
@@ -1292,7 +1296,6 @@ export default [
       'aw',
       'ctp',
       'fcgi',
-      null,
       'php3',
       'php4',
       'php5',
@@ -2289,3 +2292,12 @@ export default [
     extensions: ['prg', 'ch', 'prw'],
   },
 ]
+
+const finalList: any = {}
+list.forEach(({ extensions, name }) => {
+  extensions.forEach((ext) => {
+    finalList[ext] = name
+  })
+})
+
+export default finalList
