@@ -10,7 +10,7 @@ export interface FileInfo {
   lines: number[]
 }
 
-export default (targetDir: string = '.', config: GetFiles): FileInfo[] => {
+export default (targetDir?: string, config?: GetFiles): FileInfo[] => {
   const files = getFiles(targetDir, config)
 
   const fileDetails = files.map((filePath): FileInfo => {

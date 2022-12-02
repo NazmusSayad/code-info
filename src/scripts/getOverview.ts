@@ -12,7 +12,7 @@ interface OverviewLangStats {
   percentage: number
 }
 
-interface Overview {
+export interface Overview {
   basic: OverviewBasic
   mostUsedBySize: OverviewLangStats[]
   mostUsedByLines: OverviewLangStats[]
@@ -22,7 +22,7 @@ const sortAlgoFn = (something: any[]) => {
   return something.sort((a: any, b: any) => b.percentage - a.percentage)
 }
 
-export default (details: Details[]): Overview => {
+export default (details: Details[]): any => {
   const basic: OverviewBasic = {
     size: 0,
     lines: 0,
@@ -58,9 +58,10 @@ export default (details: Details[]): Overview => {
     })
   })
 
-  return {
+  const output: Overview = {
     basic,
     mostUsedBySize: sortAlgoFn(mostUsedBySize),
     mostUsedByLines: sortAlgoFn(mostUsedByLines),
   }
+  return output
 }

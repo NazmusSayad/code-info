@@ -14,7 +14,7 @@ export interface GetFiles {
 
 export default (
   targetDir: string = '.',
-  { exclude = [], include = [], type = [] }: GetFiles
+  { exclude = [], include = [], type = [] }: GetFiles = {}
 ) => {
   // Gitignore.....
   let ig = gitIgnore().add([
