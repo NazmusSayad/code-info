@@ -3,20 +3,13 @@ import path from 'path'
 import Table from 'cli-table'
 import ac from 'ansi-colors'
 
-import getFilesInfo from '../scripts/getFilesInfo.js'
-import getDetails from '../scripts/getDetails.js'
-import getOverview from '../scripts/getOverview.js'
+import getAll from '../index.js'
 
-const targetDir = path.resolve(argv._[0] ?? '')
-
-const details = getFilesInfo(targetDir, {
+const { overview, details } = getAll(argv._[0], {
   exclude: argv['--exclude'],
   include: argv['--include'],
   type: argv['--type'],
 })
-
-const finalResult = getDetails(details)
-const overview = getOverview(finalResult)
 
 console.log()
 const group = (label: string, options: any) => {
@@ -62,7 +55,7 @@ group(
 
 group('Languages details', {
   head: ['Name', 'Files', 'Lines', 'ACPL', 'Size (bytes)'],
-  rows: finalResult.map(({ name, lines, size, files, avgCharPerLine }) => {
+  rows: details.map(({ name, lines, size, files, avgCharPerLine }) => {
     return [name, files, lines, avgCharPerLine, size]
   }),
 })

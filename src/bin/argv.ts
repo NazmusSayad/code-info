@@ -19,9 +19,11 @@ const makeArray = (flag: '--type' | '--exclude' | '--include') => {
   const array = args[flag]
   if (!array) return
 
-  const newArray = array?.map((str) => str.split(',')).flat()
+  const newArray = array?.map((str: string) => str.split(',')).flat()
   args[flag] = newArray
 }
 
 makeArray('--type')
+makeArray('--exclude')
+makeArray('--include')
 export default args

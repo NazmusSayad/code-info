@@ -13,6 +13,7 @@ export default (dir?: string, config?: GetFiles) => {
   const overview = getOverview(details)
 
   return {
+    files,
     overview,
     details,
   }

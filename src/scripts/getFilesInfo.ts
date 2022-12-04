@@ -10,8 +10,8 @@ export interface FileInfo {
   lines: number[]
 }
 
-export default (targetDir?: string, config?: GetFiles): FileInfo[] => {
-  const files = getFiles(targetDir, config)
+export default (dir?: string, config?: GetFiles): FileInfo[] => {
+  const files = getFiles(dir, config)
 
   const fileDetails = files.map((filePath): FileInfo => {
     const extname = path.extname(filePath).slice(1)
