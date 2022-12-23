@@ -1,6 +1,6 @@
 {
   "name": "code-info",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "code-info",
   "preferGlobal": true,
   "main": "./dist-mjs/index.js",
@@ -13,7 +13,7 @@
     }
   },
   "scripts": {
-    "ci": "node --watch dist-cjs/bin/index.js",
+    "test": "node --watch dist-cjs/bin/index.js",
     "dev": "npm-ez dev",
     "build": "npm-ez build"
   },

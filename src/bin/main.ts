@@ -1,9 +1,9 @@
 import argv from './argv.js'
-import path from 'path'
 import Table from 'cli-table'
 import ac from 'ansi-colors'
 
 import getAll from '../index.js'
+import fileSize from '../data/fileSize.js'
 
 const { overview, details } = getAll(argv._[0], {
   exclude: argv['--exclude'],
@@ -12,11 +12,26 @@ const { overview, details } = getAll(argv._[0], {
 })
 
 console.log()
+
+const getFileSizeLabel = (label: string) => {
+  return (
+    label +
+    // @ts-ignore
+    ` (${fileSize[argv['--size']] ? argv['--size']?.toUpperCase() : 'Bytes'})`
+  )
+}
+const getFileSize = (bytes: number) => {
+  // @ts-ignore
+  const base = fileSize[argv['--size']] ?? 0
+  if (!base) return bytes
+  return (bytes / base).toFixed(2)
+}
+
 const group = (label: string, options: any) => {
   console.log('', ac.blueBright.bold(label + ':'))
   console.log(
     new Table({
-      colAligns: ['left', 'middle', 'right', 'right', 'right'],
+      colAligns: ['left', 'middle', 'right', 'right', 'right', 'right'],
       ...options,
     }).toString()
   )
@@ -33,13 +48,14 @@ const logLangStats = (stats: any) => {
 }
 
 group('Basic Overview', {
-  head: ['Files', 'Lines', 'ACPL', 'Size (bytes)'],
+  head: ['Files', 'Lines', 'LPF', 'CPL', getFileSizeLabel('Size')],
   rows: [
     [
-      overview.basic.files.toString(),
-      overview.basic.lines.toString(),
-      overview.basic.avgCharPerLine.toString(),
-      overview.basic.size.toString(),
+      overview.basic.files,
+      overview.basic.lines,
+      overview.basic.avgLinePerFile,
+      overview.basic.avgCharPerLine,
+      getFileSize(overview.basic.size),
     ],
   ],
 })
@@ -54,8 +70,17 @@ group(
 )
 
 group('Languages details', {
-  head: ['Name', 'Files', 'Lines', 'ACPL', 'Size (bytes)'],
-  rows: details.map(({ name, lines, size, files, avgCharPerLine }) => {
-    return [name, files, lines, avgCharPerLine, size]
-  }),
+  head: ['Name', 'Files', 'Lines', 'LPF', 'CPL', getFileSizeLabel('Size')],
+  rows: details.map(
+    ({ name, lines, size, files, avgCharPerLine, avgLinePerFile }) => {
+      return [
+        name,
+        files,
+        lines,
+        avgLinePerFile,
+        avgCharPerLine,
+        getFileSize(size),
+      ]
+    }
+  ),
 })

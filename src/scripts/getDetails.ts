@@ -7,6 +7,7 @@ export interface Details {
   files: number
   lines: number
   avgCharPerLine: number
+  avgLinePerFile: number
 }
 
 export default (details: FileInfo[]): Details[] => {
@@ -36,6 +37,7 @@ export default (details: FileInfo[]): Details[] => {
       files: details.length,
       lines: totalLines,
       avgCharPerLine: Math.round(totalCharPerLine / details.length),
+      avgLinePerFile: Math.round(totalLines / details.length),
       size: +totalSize.toFixed(1),
     })
   }

@@ -5,6 +5,7 @@ interface OverviewBasic {
   files: number
   lines: number
   avgCharPerLine: number
+  avgLinePerFile: number
 }
 
 interface OverviewLangStats {
@@ -28,6 +29,7 @@ export default (details: Details[]): any => {
     lines: 0,
     files: 0,
     avgCharPerLine: 0,
+    avgLinePerFile: 0,
   }
   const mostUsedBySize: OverviewLangStats[] = []
   const mostUsedByLines: OverviewLangStats[] = []
@@ -40,6 +42,7 @@ export default (details: Details[]): any => {
   })
 
   basic.avgCharPerLine = Math.round(basic.avgCharPerLine / details.length)
+  basic.avgLinePerFile = Math.round(basic.lines / basic.files)
 
   details.forEach((dt) => {
     const getPercentage = (key: string) => {

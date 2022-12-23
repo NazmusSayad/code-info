@@ -1,12 +1,9 @@
 import { GetFiles } from './scripts/_getFiles.js'
-import _getFilesInfo from './scripts/getFilesInfo.js'
-import _getDetails from './scripts/getDetails.js'
-import _getOverview from './scripts/getOverview.js'
+import getFilesInfo from './scripts/getFilesInfo.js'
+import getDetails from './scripts/getDetails.js'
+import getOverview from './scripts/getOverview.js'
 
-export const getFilesInfo = _getFilesInfo
-export const getDetails = _getDetails
-export const getOverview = _getOverview
-
+export { getFilesInfo, getDetails, getOverview }
 export default (dir?: string, config?: GetFiles) => {
   const files = getFilesInfo(dir, config)
   const details = getDetails(files)

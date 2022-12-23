@@ -1,10 +1,12 @@
 import arg from 'arg'
 
 const args = arg({
+  '--size': String,
   '--type': [String],
   '--exclude': [String],
   '--include': [String],
 
+  '-s': '--size',
   '-t': '--type',
   '-e': '--exclude',
   '-i': '--include',
