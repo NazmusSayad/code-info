@@ -3,7 +3,7 @@ export interface List {
   extensions: string[]
 }
 
-const langList: List[] = [
+export const langList: List[] = [
   {
     name: '1C Enterprise',
     extensions: ['bsl', 'os'],
@@ -2293,11 +2293,9 @@ const langList: List[] = [
   },
 ]
 
-export const langExtList: any = {}
+export const langExtMap: Record<string, number> = {}
 langList.forEach(({ extensions }, index) => {
   extensions.forEach((ext) => {
-    langExtList[ext] = index
+    langExtMap[ext] = index
   })
 })
-
-export default langList
