@@ -11,7 +11,12 @@ type GetTargetFiles = {
 
 const coreIgnore = ['.git', '.DS_Store']
 export default function (config: GetTargetFiles) {
-  const ig = createIg(config.cwd, config.exclude)
+  const ig = createIg(config.cwd, [
+    ...config.exclude,
+    'package-lock.json',
+    'yarn.lock',
+    'pnpm-lock.yaml',
+  ])
 
   const totalFiles = config.include.map((item) => {
     const fullPath = path.resolve(config.cwd, item)

@@ -21,22 +21,22 @@ const app = NoArg.create('app', {
 })
 
 app.on(([folders], flags) => {
-  flags.cwd = path.resolve(flags.cwd)
-  flags.ext = flags.ext?.filter(Boolean) ?? []
-  flags.exclude = flags.exclude?.filter(Boolean) ?? []
+  const cwd = path.resolve(flags.cwd)
+  const ext = flags.ext?.filter(Boolean) ?? []
+  const exclude = flags.exclude?.filter(Boolean) ?? []
 
   const targetedFiles = getTargetFiles({
-    cwd: flags.cwd,
-    extensions: flags.ext ?? [],
-    exclude: flags.exclude ?? [],
-    include: folders.length ? folders : [flags.cwd],
+    cwd: cwd,
+    extensions: ext,
+    exclude: exclude,
+    include: folders.length ? folders : [cwd],
   })
 
   const fileInfo = getFileInfo(targetedFiles)
   const mappedFiles = mapLang(fileInfo, flags.unknown)
   render(mappedFiles, {
     renderOverview: true,
-    renderLanguages: true,
+    renderLanguages: flags?.ext?.length === 1 ? false : true,
     renderMostUsedBySize: false,
     renderMostUsedByLine: false,
   })
