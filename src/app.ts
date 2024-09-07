@@ -34,11 +34,13 @@ app.on(([folders], flags) => {
 
   const fileInfo = getFileInfo(targetedFiles)
   const mappedFiles = mapLang(fileInfo, flags.unknown)
+  const totalLanguages = Object.keys(mappedFiles).length
+
   render(mappedFiles, {
     renderOverview: true,
-    renderLanguages: flags?.ext?.length === 1 ? false : true,
-    renderMostUsedBySize: false,
-    renderMostUsedByLine: false,
+    renderLanguages: totalLanguages > 1 && true,
+    renderMostUsedBySize: totalLanguages > 1 && true,
+    renderMostUsedByLine: totalLanguages > 1 && true,
   })
 })
 
