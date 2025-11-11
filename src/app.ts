@@ -15,6 +15,7 @@ const app = NoArg.create('app', {
     exclude: NoArg.array(NoArg.string()).description('Folders to exclude'),
     ext: NoArg.array(NoArg.string()).description('File extensions to include'),
     unknown: NoArg.boolean().description('Include unknown language files'),
+    files: NoArg.boolean().description('Render found files'),
   },
 })
 
@@ -33,6 +34,10 @@ app.on(async ([folders], flags) => {
         flags.ext.some((ext) => file.endsWith(ext))
       )
     : targetedFiles
+
+  if (flags.files) {
+    filteredFiles.forEach((file) => console.log(file))
+  }
 
   renderFiles(filteredFiles, {
     includeUnknown: flags.unknown,

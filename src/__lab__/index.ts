@@ -1,3 +1,3 @@
 import app from '../app'
 
-app.start(['./src', '--exclude', '**/utils/**'])
+app.start(['./src', '--files'])
