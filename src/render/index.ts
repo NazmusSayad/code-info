@@ -1,16 +1,15 @@
-import { Table } from 'cli-table3'
+import * as fs from 'fs'
+import * as path from 'path'
+import Table from 'cli-table3'
+import { langList, langExtMap } from '../constants/lang-list'
+import { bytesToUnit } from '../utils/size'
+import ansiColors from 'ansi-colors'
 
 type RenderOptions = {
   includeUnknown: boolean
 }
 
 export function renderFiles(files: string[], options: RenderOptions) {
-  const fs = require('fs') as typeof import('fs')
-  const path = require('path') as typeof import('path')
-  const { langList, langExtMap } = require('../constants/lang-list') as typeof import('../constants/lang-list')
-  const { bytesToUnit } = require('../utils/size') as typeof import('../utils/size')
-  const colors = require('ansi-colors') as typeof import('ansi-colors')
-
   let totalFiles = 0
   let totalSize = 0
   let totalLines = 0
@@ -27,7 +26,9 @@ export function renderFiles(files: string[], options: RenderOptions) {
 
   for (const file of files) {
     const ext = path.extname(file).slice(1).toLowerCase()
-    const idx = ext ? (langExtMap as Record<string, number | undefined>)[ext] : undefined
+    const idx = ext
+      ? (langExtMap as Record<string, number | undefined>)[ext]
+      : undefined
     const lang = idx !== undefined ? langList[idx].name : 'Unknown'
 
     if (!options.includeUnknown && lang === 'Unknown') continue
@@ -79,92 +80,96 @@ export function renderFiles(files: string[], options: RenderOptions) {
       prev.code += fileCode
       prev.blank += fileBlank
     } else {
-      byLang.set(lang, { count: 1, size, lines: fileLines, code: fileCode, blank: fileBlank })
+      byLang.set(lang, {
+        count: 1,
+        size,
+        lines: fileLines,
+        code: fileCode,
+        blank: fileBlank,
+      })
     }
   }
 
-  const totalHuman = bytesToUnit(totalSize)
-  const indentSummary =
-    indentTabsLines > indentSpacesLines
-      ? 'Tabs'
-      : indentSpacesLines > 0
-      ? gcdSpaces > 0
-        ? `Spaces (${gcdSpaces})`
-        : 'Spaces'
-      : 'Mixed/None'
+  const summary1 = new Table({
+    head: ['Files', 'Lines', 'Size', 'Code', 'Blank', 'Languages'].map((h) =>
+      ansiColors.dim.underline.white(h)
+    ),
+    colAligns: ['left', 'left', 'left', 'right', 'right', 'right'],
+    chars: {
+      'bottom-left': '',
+      'bottom-mid': '',
+      'bottom-right': '',
+      'left-mid': '',
+      'mid-mid': '',
+      'right-mid': '',
+      'top-left': '',
+      'top-mid': '',
+      'top-right': '',
+      bottom: '',
+      left: '',
+      middle: '  ',
+      mid: '',
+      right: '',
+      top: '',
+    },
+  })
 
-  console.log(colors.bold(colors.cyan('Code Statistics')))
-  console.log(
-    colors.dim('Files') +
-      ': ' +
-      colors.bold(String(totalFiles)) +
-      '  ' +
-      colors.dim('Size') +
-      ': ' +
-      colors.bold(`${totalHuman.size} ${totalHuman.unit}`) +
-      '  ' +
-      colors.dim('Lines') +
-      ': ' +
-      colors.bold(String(totalLines))
-  )
-  console.log(
-    colors.dim('Code') +
-      ': ' +
-      colors.green(String(totalCodeLines)) +
-      '  ' +
-      colors.dim('Blank') +
-      ': ' +
-      colors.yellow(String(totalBlankLines)) +
-      '  ' +
-      colors.dim('Indentation') +
-      ': ' +
-      colors.magenta(indentSummary)
-  )
+  summary1.push([
+    String(totalFiles),
+    String(totalLines),
+    bytesToUnit(totalSize).text,
+    String(totalCodeLines),
+    String(totalBlankLines),
+    String(byLang.size),
+  ])
+
+  console.log(summary1.toString())
 
   const rows = Array.from(byLang.entries()).sort(
-    (a, b) => b[1].lines - a[1].lines || b[1].size - a[1].size || b[1].count - a[1].count
+    (a, b) =>
+      b[1].lines - a[1].lines ||
+      b[1].size - a[1].size ||
+      b[1].count - a[1].count
   )
 
   if (rows.length) {
-    const header = ['Language', 'Files', 'Lines', 'Code', 'Blank', 'Size']
-    const plain = rows.map(([lang, v]) => {
-      const h = bytesToUnit(v.size)
-      return [
-        lang,
+    const langHead = ['Language', 'Files', 'Lines', 'Code', 'Blank', 'Size']
+
+    const table = new Table({
+      head: langHead.map((h) => ansiColors.dim.underline.white(h)),
+      colAligns: ['left', 'right', 'right', 'right', 'right', 'right'],
+      chars: {
+        'bottom-left': '',
+        'bottom-mid': '',
+        'bottom-right': '',
+        'left-mid': '',
+        'mid-mid': '',
+        'right-mid': '',
+        'top-left': '',
+        'top-mid': '',
+        'top-right': '',
+        bottom: '',
+        left: '',
+        middle: '  ',
+        mid: '',
+        right: '',
+        top: '',
+      },
+    })
+
+    rows.forEach(([lang, v]) => {
+      table.push([
+        ansiColors.cyan(lang),
         String(v.count),
         String(v.lines),
         String(v.code),
         String(v.blank),
-        `${h.size} ${h.unit}`,
-      ]
+        bytesToUnit(v.size).text,
+      ])
     })
-    const colWidths = header.map((h, i) =>
-      Math.max(
-        h.length,
-        ...plain.map((r) => r[i].length)
-      )
-    )
-
-    const padRow = (cells: string[]) =>
-      cells
-        .map((c, i) => (i === 0 ? c.padEnd(colWidths[i]) : c.padStart(colWidths[i])))
-        .join('  ')
 
     console.log('')
-    console.log(colors.bold(colors.underline('By language')))
-    console.log(colors.bold(padRow(header)))
-    for (let i = 0; i < plain.length; i++) {
-      const r = plain[i]
-      const colored = [
-        colors.cyan(r[0]),
-        colors.white(r[1]),
-        colors.white(r[2]),
-        colors.green(r[3]),
-        colors.yellow(r[4]),
-        colors.white(r[5]),
-      ]
-      console.log(padRow(colored))
-    }
+    console.log(table.toString())
   }
 }
 

@@ -2,6 +2,7 @@ import NoArg from 'noarg'
 import * as path from 'path'
 import { renderFiles } from './render'
 import { getTargetFiles } from './files/get-target-files'
+import { langList } from './constants/lang-list'
 
 const app = NoArg.create('app', {
   listArgument: {
@@ -12,32 +13,44 @@ const app = NoArg.create('app', {
 
   flags: {
     cwd: NoArg.string().default('.').description('Root directory'),
-    exclude: NoArg.array(NoArg.string()).description('Folders to exclude'),
-    ext: NoArg.array(NoArg.string()).description('File extensions to include'),
     unknown: NoArg.boolean().description('Include unknown language files'),
-    files: NoArg.boolean().description('Render found files'),
+
+    ignore: NoArg.array(NoArg.string()).description('Folders to ignore'),
+    lang: NoArg.array(NoArg.string()).description('Languages to include'),
+    ext: NoArg.array(NoArg.string()).description('File extensions to include'),
   },
 })
 
 app.on(async ([folders], flags) => {
   const cwd = path.resolve(flags.cwd)
-  const exclude = flags.exclude?.filter(Boolean) ?? []
+  const ignore = flags.ignore?.filter(Boolean) ?? []
 
   const targetedFiles = await getTargetFiles({
     cwd: cwd,
-    exclude: exclude,
+    exclude: ignore,
     include: folders.length ? folders : [cwd],
   })
 
-  const filteredFiles = flags.ext?.length
+  const includedExtensions: string[] = []
+  if (flags.ext?.length) {
+    includedExtensions.push(...flags.ext.filter(Boolean))
+  }
+
+  if (flags.lang?.length) {
+    flags.lang.forEach((name) => {
+      const lang = langList.find(
+        (l) => l.name === name || l.extensions.some((ext) => ext === name)
+      )
+
+      includedExtensions.push(...lang.extensions)
+    })
+  }
+
+  const filteredFiles = flags.lang?.length
     ? targetedFiles.filter((file) =>
-        flags.ext.some((ext) => file.endsWith(ext))
+        includedExtensions.some((ext) => file.endsWith(`.${ext}`))
       )
     : targetedFiles
-
-  if (flags.files) {
-    filteredFiles.forEach((file) => console.log(file))
-  }
 
   renderFiles(filteredFiles, {
     includeUnknown: flags.unknown,
