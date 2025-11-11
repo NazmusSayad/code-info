@@ -1,44 +1,48 @@
 # code-info
 
-Small CLI to collect stats about source files in a project and print a colored table summary.
+A small CLI that analyzes a codebase and prints a concise, colored summary of files and languages. Everything runs locally — no data is sent anywhere.
 
-## Install
+## Install (for users)
 
-```bash
-npm install
-npm run build
-```
-
-## Run
-
-After building, run the CLI via the `dist` entrypoint:
+After this package is published to npm you can install it globally:
 
 ```bash
-node ./dist/index.js [folders] --cwd . --exclude node_modules --ext .ts --unknown
+npm install -g code-info
 ```
 
-- `folders`: optional list of folders to scan (defaults to current working directory)
-- `--cwd`: project root to resolve paths (default: `.`)
-- `--exclude`: comma/space-separated list of paths/patterns to ignore
-- `--ext`: include only files with given extensions (repeatable)
-- `--unknown`: include files with unknown extensions in the language breakdown
+Or run it with npx without installing:
+
+```bash
+npx code-info [folders] --cwd . --exclude node_modules --ext ts --unknown
+```
+
+## Usage
+
+Once installed globally the command is:
+
+```bash
+code-info [folders] [flags]
+cinfo [folders] [flags]
+```
+
+Common flags:
+
+- `--cwd` — project root to resolve paths (default: `.`)
+- `--exclude` — paths or glob patterns to ignore (repeatable)
+- `--ext` — include only files with given extensions (repeatable, without leading dot)
+- `--unknown` — include files with unknown extensions in the language breakdown
+- `--verbose` — print extra debugging info
 
 Example:
 
 ```bash
-node ./dist/index.js src --cwd . --exclude node_modules .git --ext .ts --ext .js
+code-info src --cwd . --exclude node_modules .git --ext ts --ext js
 ```
 
 ## Output
 
-The tool prints a compact summary (files, lines, size, code lines, blank lines, languages) and a per-language table with counts and sizes. Output uses ANSI colors and a table layout.
+The CLI prints a compact summary (files, lines, size, code lines, blank lines, languages) and a per-language table with counts and sizes. Output uses ANSI colors and a fixed-width table layout for readability.
 
-## Notes
+## Privacy
 
-- If the project is a git repository the tool uses `git ls-files` for listing files. Otherwise it falls back to a filesystem search.
-- `cli-table3` and `ansi-colors` are used for rendering. If you modify the renderer, keep terminal-friendly colors and widths in mind.
-
-## Development
-
-During development you can run `npm run dev` to compile in watch mode and run the built binary.
-
+All analysis happens locally on your machine. The tool does not transmit file contents or metadata to any remote service.

@@ -2,7 +2,10 @@
   "name": "code-info",
   "version": "3.0.0",
   "type": "commonjs",
-  "bin": "./dist/index.js",
+  "bin": {
+    "cinfo": "./dist/index.js",
+    "code-info": "./dist/index.js"
+  },
   "scripts": {
     "dev": "tsc -w",
     "build": "tsc",
