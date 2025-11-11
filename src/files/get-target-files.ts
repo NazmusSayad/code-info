@@ -2,6 +2,7 @@ import { getFilesByGit } from './get-files-by-git'
 import { getFilesBySearch } from './get-files-by-search'
 import * as path from 'path'
 import * as fs from 'fs'
+import ansiColors from 'ansi-colors'
 
 export type GetTargetFiles = {
   cwd: string
@@ -28,16 +29,22 @@ export async function getTargetFiles(config: GetTargetFiles) {
 
   const files = await getFilesByGit(include, config.exclude)
   if (files?.length === 0) {
-    console.warn('No files found by git')
+    console.warn(ansiColors.yellow('No files found by git'))
   }
 
   if (files !== null) return files
 
-  console.warn('No files found by git, using classic search')
+  console.warn(
+    ansiColors.yellow(
+      'This project is not a git repository, using classic search'
+    )
+  )
+
   const filesBySearch = await getFilesBySearch(
     config.cwd,
     include,
     config.exclude
   )
+
   return filesBySearch
 }
