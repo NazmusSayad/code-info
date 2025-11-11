@@ -1,3 +1,3 @@
 import app from '../app'
 
-app.start([])
+app.start(['./src'])

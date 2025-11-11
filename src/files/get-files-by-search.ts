@@ -2,33 +2,25 @@ import * as fs from 'fs'
 import * as path from 'path'
 import createIg from './create-ig'
 
-type GetTargetFiles = {
-  cwd: string
-  include: string[]
-  exclude: string[]
-  extensions: string[]
-}
-
 const coreIgnore = ['.git', '.DS_Store']
-export default function (config: GetTargetFiles) {
-  const ig = createIg(config.cwd, [
-    ...config.exclude,
+export async function getFilesBySearch(
+  cwd: string,
+  include: string[],
+  exclude: string[]
+) {
+  const ig = createIg(cwd, [
+    ...exclude,
     'package-lock.json',
     'yarn.lock',
     'pnpm-lock.yaml',
   ])
 
-  const totalFiles = config.include.map((item) => {
-    const fullPath = path.resolve(config.cwd, item)
+  const totalFiles = include.map((item) => {
+    const fullPath = path.resolve(cwd, item)
 
     function findFilesFromTarget(targetPath: string) {
       const stat = fs.statSync(targetPath)
       if (!stat.isDirectory()) {
-        if (config.extensions.length) {
-          const ext = path.extname(targetPath).slice(1)
-          if (!config.extensions.includes(ext)) return []
-        }
-
         return targetPath
       }
 

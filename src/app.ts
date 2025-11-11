@@ -1,9 +1,7 @@
 import NoArg from 'noarg'
 import * as path from 'path'
-import render from './render'
-import getTargetFiles from './lib/get-target-files'
-import getFileInfo from './lib/get-file-info'
-import mapLang from './lib/map-lang'
+import { renderFiles } from './render'
+import { getTargetFiles } from './files/get-target-files'
 
 const app = NoArg.create('app', {
   listArgument: {
@@ -20,28 +18,17 @@ const app = NoArg.create('app', {
   },
 })
 
-app.on(([folders], flags) => {
+app.on(async ([folders], flags) => {
   const cwd = path.resolve(flags.cwd)
-  const ext = flags.ext?.filter(Boolean) ?? []
   const exclude = flags.exclude?.filter(Boolean) ?? []
 
-  const targetedFiles = getTargetFiles({
+  const targetedFiles = await getTargetFiles({
     cwd: cwd,
-    extensions: ext,
     exclude: exclude,
     include: folders.length ? folders : [cwd],
   })
 
-  const fileInfo = getFileInfo(targetedFiles)
-  const mappedFiles = mapLang(fileInfo, flags.unknown)
-  const totalLanguages = Object.keys(mappedFiles).length
-
-  render(mappedFiles, {
-    renderOverview: true,
-    renderLanguages: totalLanguages > 1 && true,
-    renderMostUsedBySize: totalLanguages > 1 && true,
-    renderMostUsedByLine: totalLanguages > 1 && true,
-  })
+  renderFiles(targetedFiles)
 })
 
 export default app
