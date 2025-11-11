@@ -1,7 +1,6 @@
 import { spawnSync } from 'child_process'
 import * as path from 'path'
 import { minimatch } from 'minimatch'
-import ansiColors from 'ansi-colors'
 
 export async function getFilesByGit(
   include: string[],
@@ -25,11 +24,6 @@ export async function getFilesByGit(
     foundFiles.push(
       ...files.reverse().map((file) => path.resolve(target, file))
     )
-  }
-
-  if (foundFiles.length === 0) {
-    console.warn(ansiColors.yellow('No files found by git'))
-    return null
   }
 
   return foundFiles.filter((file) => !mm.some((mm) => mm.match(file)))

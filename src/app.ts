@@ -3,6 +3,7 @@ import * as path from 'path'
 import { renderFiles } from './render'
 import { getTargetFiles } from './files/get-target-files'
 import { langList } from './constants/lang-list'
+import ansiColors from 'ansi-colors'
 
 const app = NoArg.create('app', {
   listArgument: {
@@ -14,6 +15,7 @@ const app = NoArg.create('app', {
   flags: {
     cwd: NoArg.string().default('.').description('Root directory'),
     unknown: NoArg.boolean().description('Include unknown language files'),
+    verbose: NoArg.boolean().description('Verbose output'),
 
     ignore: NoArg.array(NoArg.string()).description('Folders to ignore'),
     lang: NoArg.array(NoArg.string()).description('Languages to include'),
@@ -30,6 +32,14 @@ app.on(async ([folders], flags) => {
     exclude: ignore,
     include: folders.length ? folders : [cwd],
   })
+
+  if (targetedFiles.length === 0) {
+    return ansiColors.red('No files found')
+  }
+
+  if (flags.verbose) {
+    console.log(targetedFiles)
+  }
 
   const includedExtensions: string[] = []
   if (flags.ext?.length) {
@@ -51,6 +61,10 @@ app.on(async ([folders], flags) => {
         includedExtensions.some((ext) => file.endsWith(`.${ext}`))
       )
     : targetedFiles
+
+  if (flags.verbose) {
+    console.log(filteredFiles)
+  }
 
   renderFiles(filteredFiles, {
     includeUnknown: flags.unknown,

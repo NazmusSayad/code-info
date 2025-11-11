@@ -2,6 +2,7 @@ import { getFilesByGit } from './get-files-by-git'
 import { getFilesBySearch } from './get-files-by-search'
 import * as path from 'path'
 import * as fs from 'fs'
+import ansiColors from 'ansi-colors'
 
 export type GetTargetFiles = {
   cwd: string
@@ -9,7 +10,9 @@ export type GetTargetFiles = {
   exclude: string[]
 }
 
-export async function getTargetFiles(config: GetTargetFiles) {
+export async function getTargetFiles(
+  config: GetTargetFiles
+): Promise<string[]> {
   const include: string[] = []
 
   for (const item of config.include) {
@@ -26,14 +29,18 @@ export async function getTargetFiles(config: GetTargetFiles) {
     include.push(resolvedPath)
   }
 
-  const files = await getFilesByGit(include, config.exclude)
-  if (files !== null) return files
+  let files = await getFilesByGit(include, config.exclude)
+  if (files === null) {
+    ansiColors.red('Failed to get files by git, trying to use search...')
 
-  const filesBySearch = await getFilesBySearch(
-    config.cwd,
-    include,
-    config.exclude
-  )
+    const filesBySearch = await getFilesBySearch(
+      config.cwd,
+      include,
+      config.exclude
+    )
 
-  return filesBySearch
+    files = filesBySearch
+  }
+
+  return files
 }

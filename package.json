@@ -1,6 +1,6 @@
 {
   "name": "code-info",
-  "version": "2.0.4",
+  "version": "3.0.0",
   "type": "commonjs",
   "bin": "./dist/index.js",
   "scripts": {
@@ -19,13 +19,13 @@
     "@types/node": "^22.5.4",
     "typescript": "^5.5.4"
   },
-  "author": "https://github.com/NazmusSayad",
+  "author": "https://gh.sayad.dev",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NazmusSayad/code-info.git"
+    "url": "git+https://gh.sayad.dev/code-info.git"
   },
   "bugs": {
-    "url": "https://github.com/NazmusSayad/code-info/issues"
+    "url": "https://gh.sayad.dev/code-info/issues"
   },
-  "homepage": "https://github.com/NazmusSayad/code-info#readme"
+  "homepage": "https://gh.sayad.dev/code-info#readme"
 }
