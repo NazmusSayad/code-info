@@ -14,7 +14,7 @@ const app = NoArg.create('app', {
     cwd: NoArg.string().default('.').description('Root directory'),
     exclude: NoArg.array(NoArg.string()).description('Folders to exclude'),
     ext: NoArg.array(NoArg.string()).description('File extensions to include'),
-    unknown: NoArg.boolean().description('Include unknown files'),
+    unknown: NoArg.boolean().description('Include unknown language files'),
   },
 })
 
@@ -28,7 +28,15 @@ app.on(async ([folders], flags) => {
     include: folders.length ? folders : [cwd],
   })
 
-  renderFiles(targetedFiles)
+  const filteredFiles = flags.ext?.length
+    ? targetedFiles.filter((file) =>
+        flags.ext.some((ext) => file.endsWith(ext))
+      )
+    : targetedFiles
+
+  renderFiles(filteredFiles, {
+    includeUnknown: flags.unknown,
+  })
 })
 
 export default app

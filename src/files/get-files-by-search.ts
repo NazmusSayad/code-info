@@ -1,6 +1,6 @@
 import * as fs from 'fs'
+import { minimatch } from 'minimatch'
 import * as path from 'path'
-import createIg from './create-ig'
 
 const coreIgnore = ['.git', '.DS_Store']
 export async function getFilesBySearch(
@@ -8,12 +8,7 @@ export async function getFilesBySearch(
   include: string[],
   exclude: string[]
 ) {
-  const ig = createIg(cwd, [
-    ...exclude,
-    'package-lock.json',
-    'yarn.lock',
-    'pnpm-lock.yaml',
-  ])
+  const mm = exclude.map((exclude) => new minimatch.Minimatch(exclude))
 
   const totalFiles = include.map((item) => {
     const fullPath = path.resolve(cwd, item)
@@ -32,7 +27,7 @@ export async function getFilesBySearch(
 
         // Ignore gitignore files
         const relativePath = path.relative(fullPath, childPath)
-        if (relativePath && ig.ignores(relativePath)) return []
+        if (relativePath && mm.some((mm) => mm.match(relativePath))) return []
 
         return findFilesFromTarget(path.join(targetPath, child))
       })

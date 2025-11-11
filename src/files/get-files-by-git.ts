@@ -1,11 +1,13 @@
 import { spawnSync } from 'child_process'
 import * as path from 'path'
+import { minimatch } from 'minimatch'
 
 export async function getFilesByGit(
   include: string[],
   exclude: string[]
 ): Promise<string[] | null> {
   const foundFiles: string[] = []
+  const mm = exclude.map((exclude) => new minimatch.Minimatch(exclude))
 
   for (const target of include) {
     const result = spawnSync(
@@ -24,5 +26,5 @@ export async function getFilesByGit(
     )
   }
 
-  return foundFiles
+  return foundFiles.filter((file) => !mm.some((mm) => mm.match(file)))
 }

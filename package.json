@@ -12,7 +12,7 @@
   "dependencies": {
     "ansi-colors": "^4.1.3",
     "cli-table3": "^0.6.5",
-    "ignore": "^5.3.2",
+    "minimatch": "^10.1.1",
     "noarg": "^3.1.0"
   },
   "devDependencies": {
